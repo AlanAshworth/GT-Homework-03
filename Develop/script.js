@@ -1,6 +1,3 @@
-// Global Variables
-var passwordLength; //Mark for delete
-
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
@@ -9,32 +6,29 @@ function generatePassword() {
   // 2. Filer out unconfirmed (false) types
   // 3. Loop over length call generator function for each type
   // 4. Add final pw to the pa variable and return
-  var length = prompt("Enter password length"); // psuedo-code: getPasswordlength();
-  var lower = confirm("should include lowercase?"); // Boolean check; filter out if false
-  var upper = confirm("should include uppercase?"); // Boolean check; filter out if false
-  var numerics = confirm("should include numerics?"); // Boolean check; filter out if false
-  var specials = confirm("should include special caracters?"); // Boolean check; filter out if false
+  let generatedPassword = "";                         // Initialize empty string to append characters
+  let length = setPasswordLength();
+  let lower = confirm("Should include lowercase?");             // Boolean check; filter out if false
+  let upper = confirm("Should include uppercase?");             // Boolean check; filter out if false
+  let numerics = confirm("Should include numerics?");           // Boolean check; filter out if false
+  let specials = confirm("Should include special caracters?");  // Boolean check; filter out if false
+  console.log(length, lower, upper, numerics, specials);        // check input data types
 
-  // check input data types
-  console.log(length, lower, upper, numerics, specials);
+  const typesCount = lower + upper + numerics + specials;       // count the number if inputs
+  console.log("typesCount: ", typesCount);                      // check the number of inputs
 
-  let generatedPassword = "";
-
-  const typesCount = lower + upper + numerics + specials;
-  console.log("typesCount: ", typesCount);
-
-  //pass values into generatePassword()
+  // pass prompts and confirms to an array of objects with keys. Then filter out objects set to false [0].
   const typesArr = [{ lower }, { upper }, { numerics }, { specials }].filter(
     item => Object.values(item)[0]
   );
+  console.log("typesArr: ", typesArr);                          // check the number of objects in typesArr
 
-  console.log("typesArr: ", typesArr);
-
-  //if no Booleans is set to True, do not proceed
+  // if no Booleans is set to True, do not proceed
   if (typesCount === 0) {
     return ""; // returns nothing
   }
 
+  // Looping in Objects - https://zellwk.com/blog/looping-through-js-objects/ -
   for (let i = 0; i < length; i += typesCount) {
     typesArr.forEach(type => {
       const generatorName = Object.keys(type)[0];
@@ -62,41 +56,28 @@ generateBtn.addEventListener("click", writePassword);
 // Prompts --------------------------------------------------------------------
 
 function setPasswordLength(inputlength) {
-  var inputlength = prompt(
+  var inputlength = parseInt(prompt(
     "Set password length.\nCannot be less than 8 or greater than 128 characters:"
-  );
+  ));
 
   if (
     inputlength != null &&
-    parseInt(inputlength) > 7 &&
-    parseInt(inputlength) < 129
+    inputlength > 7 &&
+    inputlength < 129
   ) {
-    this.passwordLength = inputlength;
+    return inputlength;
   } else {
     setPasswordLength();
-  }
-}
-
-function setUpperCharacters(inputUpperCase) {
-  var inputUpperCase = prompt("Add Upper Case characters:");
-  var letters = /^[A-Za-z]+$/;
-
-  if (inputUpperCase != null && inputUpperCase.value.match(letters)) {
-    for (let i = 0; i < inputUpperCase.length; i++) {
-      this.specialArray = inputUpperCase.split();
-    }
-  } else {
-    setUpperCharacters();
   }
 }
 
 // Random Object --------------------------------------------------------------
 // Pass the values returned by the Generators to a randomGenerator object.
 const randomGenerator = {
-  lower: getRandomLower,
-  upper: getRandomUpper,
-  number: getRandomNumber,
-  special: getRandomSpecialCharacter
+  lower: getRandomLower(),
+  upper: getRandomUpper(),
+  number: getRandomNumber(),
+  special: getRandomSpecialCharacter()
 };
 
 // Generators ----- https://www.w3schools.com/html/html_charset.asp -----------
@@ -130,9 +111,8 @@ function getRandomSpecialCharacter() {
 
 // Function Calls--------------------------------------------------------------
 
-console.log(getRandomLower());
-console.log(getRandomUpper());
-console.log(getRandomNumber());
-console.log(getRandomSpecialCharacter());
-
-console.log(generatePassword());
+// console.log(getRandomLower());
+// console.log(getRandomUpper());
+// console.log(getRandomNumber());
+// console.log(getRandomSpecialCharacter());
+// console.log(randomGenerator);

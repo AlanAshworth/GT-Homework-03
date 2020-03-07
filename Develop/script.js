@@ -5,24 +5,24 @@ var generateBtn = document.querySelector("#generate");
 function generatePassword() {
   let generatedPassword = [];
   let length = setPasswordLength();
-  let lower = confirm("Criteria: Include lower-case characters?");              // Boolean check; to be filtered out if false
-  let upper = confirm("Criteria: Include upper-case characters?");              // Boolean check; to be filtered out if false
-  let numeric = confirm("Criteria: Include numeric characters?");               // Boolean check; to be filtered out if false
-  let special = confirm("Criteria: Include special characters?");               // Boolean check; to be filtered out if false
-  const passwordCriteria = lower + upper + numeric + special;                   // Tallies the amount of criteria
+  let hasLower = confirm("Criteria: Include lower-case characters?");              // Boolean check; to be filtered out if false
+  let hasUpper = confirm("Criteria: Include upper-case characters?");              // Boolean check; to be filtered out if false
+  let hasNumeric = confirm("Criteria: Include numeric characters?");               // Boolean check; to be filtered out if false
+  let hasSpecial = confirm("Criteria: Include special characters?");               // Boolean check; to be filtered out if false
+  const passwordCriteria = hasLower + hasUpper + hasNumeric + hasSpecial;                   // Tallies the amount of criteria
 
   if (passwordCriteria !== 0) {                                                 // Block run only if tallied criteria greater than zero
     let charcodes = [];
-    if (lower === true) {
+    if (hasLower) {
       charcodes = charcodes.concat(lowerCaseCharCodes);
     }
-    if (upper === true) {
+    if (hasUpper) {
       charcodes = charcodes.concat(upperCaseCharCodes);
     }
-    if (numeric === true) {
+    if (hasNumeric) {
       charcodes = charcodes.concat(numericCaseCharCodes);
     }
-    if (special === true) {
+    if (hasSpecial) {
       charcodes = charcodes.concat(specialCaseCharCodes);
     }
 

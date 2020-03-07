@@ -50,7 +50,7 @@ function generatePassword() {
   let numeric = confirm("Criteria: Include numeric characters?"); // Boolean check; filter out if false
   let special = confirm("Criteria: Include special characters?"); // Boolean check; filter out if false
   const passwordCriteria = lower + upper + numeric + special;
-  
+
   if(passwordCriteria !== 0){
     let charcodes = [];
     if(lower === true){charcodes = charcodes.concat(lowerCaseCharCodes);}
@@ -114,7 +114,7 @@ const randomCriteriaGenerator = {
 const lowerCaseCharCodes = arrayFromLowToHigh(97, 122);
 const upperCaseCharCodes = arrayFromLowToHigh(65, 90);
 const numericCaseCharCodes = arrayFromLowToHigh(48, 57);
-const specialCaseCharCodes = arrayFromLowToHigh(33, 47).concat(arrayFromLowToHigh(58, 64)).concat(arrayFromLowToHigh(91, 96)).concat(arrayFromLowToHigh(123, 126));
+const specialCaseCharCodes = arrayFromLowToHigh(32, 47).concat(arrayFromLowToHigh(58, 64)).concat(arrayFromLowToHigh(91, 96)).concat(arrayFromLowToHigh(123, 126));
 
 // Generators (deprecated) ---- https://www.w3schools.com/html/html_charset.asp
 function getRandomLower() {

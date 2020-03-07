@@ -5,11 +5,11 @@ var generateBtn = document.querySelector("#generate");
 function generatePassword() {
   let generatedPassword = [];
   let length = setPasswordLength();
-  let hasLower = confirm("Criteria: Include lower-case characters?");              // Boolean check; to be filtered out if false
-  let hasUpper = confirm("Criteria: Include upper-case characters?");              // Boolean check; to be filtered out if false
-  let hasNumeric = confirm("Criteria: Include numeric characters?");               // Boolean check; to be filtered out if false
-  let hasSpecial = confirm("Criteria: Include special characters?");               // Boolean check; to be filtered out if false
-  const passwordCriteria = hasLower + hasUpper + hasNumeric + hasSpecial;                   // Tallies the amount of criteria
+  let hasLower = confirm("Criteria: Include lower-case characters?");           // Boolean check; to be filtered out if false
+  let hasUpper = confirm("Criteria: Include upper-case characters?");           // Boolean check; to be filtered out if false
+  let hasNumeric = confirm("Criteria: Include numeric characters?");            // Boolean check; to be filtered out if false
+  let hasSpecial = confirm("Criteria: Include special characters?");            // Boolean check; to be filtered out if false
+  const passwordCriteria = hasLower + hasUpper + hasNumeric + hasSpecial;       // Tallies the amount of criteria
 
   if (passwordCriteria !== 0) {                                                 // Block run only if tallied criteria greater than zero
     let charcodes = [];
@@ -25,15 +25,15 @@ function generatePassword() {
     if (hasSpecial) {
       charcodes = charcodes.concat(specialCaseCharCodes);
     }
-
     for (let i = 0; i < length; i++) {
       const characterCode =
         charcodes[Math.floor(Math.random() * charcodes.length)];
       generatedPassword.push(String.fromCharCode(characterCode));               // Get character from each passed code
     }
     return generatedPassword.join("");
+  } else {
+    return "No password criteria passed. Must provide criteria.";               // Message upon not providing character criteria
   }
-  return "No password criteria passed. Must provide criteria.";                 // Message upon not providing character criteria
 }
 
 // Write password to the #password input

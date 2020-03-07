@@ -41,43 +41,32 @@ var generateBtn = document.querySelector("#generate");
 //   // return finalPassword;
 // }
 
-const lowerCaseCharCodes = arrayFromLowToHigh(97, 122);
-const upperCaseCharCodes = arrayFromLowToHigh(65, 90);
-const numericCaseCharCodes = arrayFromLowToHigh(48, 57);
-const specialCaseCharCodes = arrayFromLowToHigh(33, 47).concat(arrayFromLowToHigh(58, 64)).concat(arrayFromLowToHigh(91, 96)).concat(arrayFromLowToHigh(123,126));
 
 function generatePassword() {
   let generatedPassword = [];
   let length = setPasswordLength();
-  let lower = confirm("Should include lowercase?"); // Boolean check; filter out if false
-  let upper = confirm("Should include uppercase?"); // Boolean check; filter out if false
-  let numeric = confirm("Should include numerics?"); // Boolean check; filter out if false
-  let special = confirm("Should include special caracters?"); // Boolean check; filter out if false
+  let lower = confirm("Criteria: Include lower-case characters?"); // Boolean check; filter out if false
+  let upper = confirm("Criteria: Include upper-case characters?"); // Boolean check; filter out if false
+  let numeric = confirm("Criteria: Include numeric characters?"); // Boolean check; filter out if false
+  let special = confirm("Criteria: Include special characters?"); // Boolean check; filter out if false
   const passwordCriteria = lower + upper + numeric + special;
-
+  
   if(passwordCriteria !== 0){
-    let charcodes = lowerCaseCharCodes;
-    // if(lower === true){charcodes = charcodes.concat(lowerCaseCharCodes);}
+    let charcodes = [];
+    if(lower === true){charcodes = charcodes.concat(lowerCaseCharCodes);}
     if(upper === true){charcodes = charcodes.concat(upperCaseCharCodes);}
-    if(numeric === true){charcodes.concat(numericCaseCharCodes);}
+    if(numeric === true){charcodes = charcodes.concat(numericCaseCharCodes);}
     if(special === true){charcodes = charcodes.concat(specialCaseCharCodes);}
 
     for (let i = 0; i < length; i++) {
-      const characterCode = charcodes[Math.floor(Math.random() * length)];
+      const characterCode = charcodes[Math.floor(Math.random() * charcodes.length)];
       generatedPassword.push(String.fromCharCode(characterCode));
     }
     return generatedPassword.join('');
   }
-  return "";// Returns Nothing
+  return "No password criteria passed. Must provide criteria."; // Message upon not providing lower-case, upper-case, numbers, or special-characters. 
 }
 
-function arrayFromLowToHigh(low, high) {
-  const array = [];
-  for (let i = low; i <= high; i++) {
-    array.push(i);
-  }
-  return array;
-}
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
@@ -89,8 +78,7 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-// Prompts --------------------------------------------------------------------
-
+// Helper Functions -----------------------------------------------------------
 function setPasswordLength(inputlength) {
   var inputlength = parseInt(
     prompt(
@@ -105,7 +93,15 @@ function setPasswordLength(inputlength) {
   }
 }
 
-// Random Object --------------------------------------------------------------
+function arrayFromLowToHigh(low, high) {
+  const array = [];
+  for (let i = low; i <= high; i++) {
+    array.push(i);
+  }
+  return array;
+}
+
+// Random Object (deprecated) -------------------------------------------------
 // Pass the values returned by the Generators to a randomGenerator object.
 const randomCriteriaGenerator = {
   lower: getRandomLower,
@@ -114,8 +110,13 @@ const randomCriteriaGenerator = {
   special: getRandomSpecialCharacter
 };
 
-// Generators ----- https://www.w3schools.com/html/html_charset.asp -----------
+// Unicode Arrays ----- https://www.w3schools.com/html/html_charset.asp -------
+const lowerCaseCharCodes = arrayFromLowToHigh(97, 122);
+const upperCaseCharCodes = arrayFromLowToHigh(65, 90);
+const numericCaseCharCodes = arrayFromLowToHigh(48, 57);
+const specialCaseCharCodes = arrayFromLowToHigh(33, 47).concat(arrayFromLowToHigh(58, 64)).concat(arrayFromLowToHigh(91, 96)).concat(arrayFromLowToHigh(123, 126));
 
+// Generators (deprecated) ---- https://www.w3schools.com/html/html_charset.asp
 function getRandomLower() {
   // HTML Charset; Browsers use unicodes to represent characters. The String
   // object has a method that generates a string from a unicode value.
@@ -142,11 +143,3 @@ function getRandomSpecialCharacter() {
   const symbols = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
   return symbols[Math.floor(Math.random() * symbols.length)];
 }
-
-// Function Calls--------------------------------------------------------------
-
-// console.log(getRandomLower());
-// console.log(getRandomUpper());
-// console.log(getRandomNumber());
-// console.log(getRandomSpecialCharacter());
-// console.log(randomGenerator);

@@ -1,6 +1,7 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
 
+// Generate a code based on selected criteria
 function generatePassword() {
   let generatedPassword = [];
   let length = setPasswordLength();
